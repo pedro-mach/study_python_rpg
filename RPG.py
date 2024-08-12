@@ -8,26 +8,28 @@
 
 #for npc in npcs_list:
 #    print(npc["type"])
-
 from random import randint
 
 npc_list = []
 
-start_level = 1
-dano_player = (start_level + (randint(10, 15)))*2,
-Player = {
-    "nome": "Pedro",
+def adicionar_player():
+    # Solicita o nome e o RM do aluno
+    nome = input("Digite o nome: ")
+    start_level = 1
+    dano_player = (start_level + (randint(10, 15)))*2
+    Player = {
+    "nome": nome,
     "level": 1,
     "exp": 0,
     "exp_max": 30,
-    "hp": 80,
+    "hp": 50 *(randint(2, 5)/2),
     "hp_max": 200,
     "dano": dano_player
-}
-print (Player
-       )
-
-
+    }
+    print(
+        f"Nome: {Player['nome']} | Level: {Player['level']} | HP: {Player['hp']} | Damage: {Player['dano']}"
+    )
+adicionar_player() # adiciona player
 def create_npc():
     
     level = randint(1, 30) # level
@@ -79,5 +81,7 @@ def show_npcs(): # fromatação
     
 rep_npc(5) # quantia
 show_npcs() # lista
+
+
 
     
