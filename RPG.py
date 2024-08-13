@@ -9,6 +9,13 @@
 #for npc in npcs_list:
 #    print(npc["type"])
 from random import randint
+import os
+import sys
+import time
+
+def reset():
+    python = sys.executable
+    os.execl(python, python, *sys.argv)
 
 npc_list = []
 
@@ -16,13 +23,14 @@ npc_list = []
 nome = input("Digite o nome: ")
 level = 1
 dano_player = (level + (randint(10, 15)))*2
+hp = 50 *(randint(2, 5)/2)
 Player = {
     "nome": nome,
     "level": 1,
     "exp": 0,
     "exp_max": 30,
-    "hp": 50 *(randint(2, 5)/2),
-    "hp_max": 200,
+    "hp": hp,
+    "hp_max": hp,
     "dano": dano_player
     }
    
@@ -77,10 +85,68 @@ def show_npcs(): # fromatação
         print(
             f"Nome: {npc['Nome']} | Level: {npc['Level']} | HP: {npc['hp']} | Damage: {npc['damage']} | Classe: {npc['Class']} | Raridade: {npc['Raridade']} | XP: {npc['exp']}"
         )
-    
-rep_npc(5) # quantia
-show_npcs() # lista
+        
+rep_npc(5)
 
 
+def select():
+    show_npcs()
+    while True:
+        try:
+            npc = int(input("Escolha um NPC: "))
+            if  npc >= 0 and  npc <= len(npc_list):
+                return npc_list[npc - 1]
+            else:
+                print("Escolha um NPC válido!")
+        except ValueError:
+            print("Escolha um NPC válido!")
+            
 
-    
+def final():
+    npc = select()
+    Player['exp'] += npc['exp']
+    if Player['exp'] >= Player['exp_max']:
+        Player['level'] += 1
+        Player['exp'] -= Player['exp_max']
+        Player['exp_max'] = 30 + (Player['level'] * 10)
+        Player['hp_max'] += 50
+        Player['hp'] = Player['hp_max']
+        print(f"Level Up! Novo Level: {Player['level']}")   
+        
+def batalha():
+    npc = select()
+    while Player['hp'] > 0 and npc['hp'] > 0:
+            Player['hp'] -= npc['damage']
+            npc['hp'] -= Player['dano']
+            print(
+                f"Nome: {Player['nome']} | HP: {Player['hp']} | Damage: {Player['dano']}"
+            )
+            print(
+                f"Nome: {npc['Nome']} | HP: {npc['hp']} | Damage: {npc['damage']}"
+            )
+    if npc['hp'] < 0:
+        npc_list.remove(npc)
+        print(f"NPC derrotado || Exp Ganha:{npc['exp']}")
+        final()
+        Player['exp'] += npc['exp']
+        Player['hp'] = Player['hp_max']
+        print( f"Nome: {Player['nome']} | Level: {Player['level']} | HP: {Player['hp']}")
+        select()
+        batalha()
+        
+    if Player['hp'] < 0:
+        print(f"Você foi derrotado !!!")
+        print("Vamos novamente?")
+        continuar = input("Digite 'S' para continuar ou 'N' para sair: ")
+        if continuar.upper() == "S":
+            print("Vamos nessa então !!!")
+            time.sleep(3)
+            reset()
+        else:
+            print("Saindo do Jogo...")
+            time.sleep(3)
+            sys.exit()
+            
+batalha()
+
+   
