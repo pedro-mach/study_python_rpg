@@ -18,11 +18,8 @@ def reset():
     os.execl(python, python, *sys.argv)
 
 npc_list = []
-
-#variaveis de armadura e classe
-#armadura = dano - 10
-    # Solicita o nome
-nome = input("Digite o nome: ")
+   
+nome = input("Digite o nome: ") # Solicita o nome
 continuar = input("Digite 'TANK' para +10 de Armadura, 'ASSASINO' para +10 de dano ou 'NENHUM' para jogar: ")
 level = 1
 dano_player = (level + (randint(10, 15)))*2
@@ -69,8 +66,14 @@ def create_npc():
     
     if continuar.upper() == "TANK":
         dano -= 10
+    if dano <= 0:
+        dano = 0
 
     x = len(npc_list) + 1  # Contador para nomear os NPCs automaticamente.
+    
+    exp = (dano_original - level)*2
+    if exp <=0:
+        exp = 0
     
     new_npc = { # criação de NPCs e atribuições
         "Nome": f"NPC #{x}",
@@ -78,7 +81,7 @@ def create_npc():
         "Dano": dano_original,
         "damage": dano, 
         "hp": 50 *(level/2), # var de hp - mudar
-        "exp": (dano - level)*2,
+        "exp": exp,
         "Raridade": raridade,
         "Class": Classe
         }
@@ -99,19 +102,13 @@ rep_npc(5)
 
 def select():
     show_npcs()
-    while True:
-        try:
-            npc = int(input("Escolha um NPC: "))
-            if  npc >= 0 and  npc <= len(npc_list):
+    npc = int(input("Escolha um NPC: "))
+    if  npc >= 0 and  npc <= len(npc_list):
                 return npc_list[npc - 1]
-            else:
-                print("Escolha um NPC válido!")
-        except ValueError:
-            print("Escolha um NPC válido!")
+    else:
+        print("Escolha um NPC válido!")
                 
 def final():
-    npc = select()
-    Player['exp'] += npc['exp']
     if Player['exp'] >= Player['exp_max']:
         Player['level'] += 1
         Player['exp'] -= Player['exp_max']
@@ -132,12 +129,12 @@ def batalha():
                 f"Nome: {npc['Nome']} | HP: {npc['hp']} | Damage: {npc['damage']}"
             )
     if npc['hp'] < 0:
-        npc_list.remove(npc)
-        print(f"NPC derrotado || Exp Ganha:{npc['exp']}")
-        final()
         Player['exp'] += npc['exp']
+        print(f"NPC derrotado || Exp Ganha:{npc['exp']}")
+        npc_list.remove(npc)
+        final()
         Player['hp'] = Player['hp_max']
-        print( f"Nome: {Player['nome']} | Level: {Player['level']} | HP: {Player['hp']}")
+        print( f"Nome: {Player['nome']} | Level: {Player['level']} | HP: {Player['hp']} | Exp: {Player['exp']} / {Player['exp_max']}")
         select()
         batalha()
         
