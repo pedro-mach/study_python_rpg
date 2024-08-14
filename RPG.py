@@ -19,27 +19,32 @@ def reset():
 
 npc_list = []
 
+#variaveis de armadura e classe
+#armadura = dano - 10
     # Solicita o nome
 nome = input("Digite o nome: ")
+continuar = input("Digite 'TANK' para +10 de Armadura, 'ASSASINO' para +10 de dano ou 'NENHUM' para jogar: ")
 level = 1
 dano_player = (level + (randint(10, 15)))*2
 hp = 50 *(randint(2, 5)/2)
-Player = {
+if continuar.upper() == "ASSASINO":
+        dano_player += 10
+Player = {     
     "nome": nome,
     "level": 1,
     "exp": 0,
     "exp_max": 30,
     "hp": hp,
     "hp_max": hp,
-    "dano": dano_player
+    "dano": dano_player,
+    "classe": continuar
     }
    
 print(
-        f"Nome: {Player['nome']} | Level: {Player['level']} | HP: {Player['hp']} | Damage: {Player['dano']}"
+        f"Nome: {Player['nome']} | Level: {Player['level']} | HP: {Player['hp']} | Damage: {Player['dano']} | Classe: {Player['classe']}"
     )
 
 def create_npc():
-    
     level = randint(1, 30) # level
     if level <= 10: #raridade
         raridade = "Comum"
@@ -52,6 +57,7 @@ def create_npc():
         
     damage_var = randint(1, 10) # Define variavel dano
     dano = 2 * (level + damage_var) # dafine dano
+    dano_original = dano
     if dano <= 30: # verifica força
         Classe = "Fraco"
     elif dano <= 55:
@@ -60,12 +66,16 @@ def create_npc():
         Classe = "Forte"
     else:
         Classe = "Elite"
+    
+    if continuar.upper() == "TANK":
+        dano -= 10
 
     x = len(npc_list) + 1  # Contador para nomear os NPCs automaticamente.
     
     new_npc = { # criação de NPCs e atribuições
         "Nome": f"NPC #{x}",
         "Level": level,
+        "Dano": dano_original,
         "damage": dano, 
         "hp": 50 *(level/2), # var de hp - mudar
         "exp": (dano - level)*2,
@@ -83,11 +93,9 @@ def rep_npc(n_npcs): # adiciona na lista
 def show_npcs(): # fromatação
     for npc in npc_list:
         print(
-            f"Nome: {npc['Nome']} | Level: {npc['Level']} | HP: {npc['hp']} | Damage: {npc['damage']} | Classe: {npc['Class']} | Raridade: {npc['Raridade']} | XP: {npc['exp']}"
+            f"Nome: {npc['Nome']} | Level: {npc['Level']} | HP: {npc['hp']} | Dano-origal: {npc['Dano']} | Dano: {npc['damage']} | Classe: {npc['Class']} | Raridade: {npc['Raridade']} | XP: {npc['exp']}"
         )
-        
 rep_npc(5)
-
 
 def select():
     show_npcs()
@@ -100,8 +108,7 @@ def select():
                 print("Escolha um NPC válido!")
         except ValueError:
             print("Escolha um NPC válido!")
-            
-
+                
 def final():
     npc = select()
     Player['exp'] += npc['exp']
@@ -146,7 +153,6 @@ def batalha():
             print("Saindo do Jogo...")
             time.sleep(3)
             sys.exit()
-            
 batalha()
 
    
