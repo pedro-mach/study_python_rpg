@@ -68,15 +68,15 @@ def create_npc():
         dano -= 10
     if dano <= 0:
         dano = 0
-
-    x = len(npc_list) + 1  # Contador para nomear os NPCs automaticamente.
+  # Contador para nomear os NPCs automaticamente.
     
     exp = (dano_original - level)*2
     if exp <=0:
         exp = 0
     
+    nome = len(npc_list) + 1
     new_npc = { # criação de NPCs e atribuições
-        "Nome": f"NPC #{x}",
+        "Nome": nome,
         "Level": level,
         "Dano": dano_original,
         "damage": dano, 
