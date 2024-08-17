@@ -17,9 +17,36 @@ def reset():
     python = sys.executable
     os.execl(python, python, *sys.argv)
 
+def space():
+    print("-" * 40)
+    
+space()
+print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
+time.sleep(0.3)
+print("░░█░░░░█▀▀▀█░█▀▀█░█▀▀▄░▀█▀░█▄░░█░█▀▀█░░")
+time.sleep(0.3)
+print("░░█░░░░█░░░█░█▄▄█░█░░█░░█░░█░█░█░█░▄▄░░")
+time.sleep(0.3)
+print("░░█▄▄█░█▄▄▄█░█░░█░█▄▄▀░▄█▄░█░░▀█░█▄▄█░░")
+time.sleep(0.3)
+print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
+time.sleep(0.3)
+print("░█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█░")
+time.sleep(0.3)
+print("░█░██░██░██░██░██░██░██░██░██░██░██░░█░")
+time.sleep(0.3)
+print("░█░██░██░██░██░██░██░██░██░██░██░██░░█░")
+time.sleep(0.3)
+print("░█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█░")
+time.sleep(0.3)
+print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
+space()
+
 npc_list = []
-   
+
+print("→ Vamos começar criando seu player")
 nome = input("Digite o nome: ") # Solicita o nome
+print("→ Vamos escolher uma classe!!")
 continuar = input("Digite 'TANK' para +10 de Armadura, 'ASSASINO' para +10 de dano ou 'NENHUM' para jogar: ")
 level = 1
 dano_player = (level + (randint(10, 15)))*2
@@ -36,10 +63,13 @@ Player = {
     "dano": dano_player,
     "classe": continuar
     }
-   
+space()
+
 print(
-        f"Nome: {Player['nome']} | Level: {Player['level']} | HP: {Player['hp']} | Damage: {Player['dano']} | Classe: {Player['classe']}"
+        f"Player: {Player['nome']} | Level: {Player['level']} | HP: {Player['hp']} | Damage: {Player['dano']} | Classe: {Player['classe']}"
     )
+space()
+    
 
 def create_npc():
     level = randint(1, 30) # level
@@ -92,11 +122,14 @@ def rep_npc(n_npcs): # adiciona na lista
     for x in range(n_npcs):
         npc = create_npc()
         npc_list.append(npc)
-    
+
+print("Selecione um NPC pelo ID para iniciar o combate")
+print("↓↓↓")
 def show_npcs(): # fromatação
     for npc in npc_list:
+        
         print(
-            f"Nome: {npc['Nome']} | Level: {npc['Level']} | HP: {npc['hp']} | Dano-origal: {npc['Dano']} | Dano: {npc['damage']} | Classe: {npc['Class']} | Raridade: {npc['Raridade']} | XP: {npc['exp']}"
+            f"ID {npc['Nome']} | Level: {npc['Level']} | HP: {npc['hp']} | Dano-origal: {npc['Dano']} | Dano: {npc['damage']} | Classe: {npc['Class']} | Raridade: {npc['Raridade']} | XP: {npc['exp']}"
         )
 rep_npc(5)
 
@@ -115,10 +148,12 @@ def final():
         Player['exp_max'] = 30 + (Player['level'] * 10)
         Player['hp_max'] += 50
         Player['hp'] = Player['hp_max']
+       
         print(f"Level Up! Novo Level: {Player['level']}")   
         
 def batalha():
     npc = select()
+    space()
     while Player['hp'] > 0 and npc['hp'] > 0:
             Player['hp'] -= npc['damage']
             npc['hp'] -= Player['dano']
@@ -128,27 +163,47 @@ def batalha():
             print(
                 f"Nome: {npc['Nome']} | HP: {npc['hp']} | Damage: {npc['damage']}"
             )
+    space()
     if npc['hp'] < 0:
         Player['exp'] += npc['exp']
-        print(f"NPC derrotado || Exp Ganha:{npc['exp']}")
+        print(f"→ NPC derrotado || Exp Ganha:{npc['exp']}")
         npc_list.remove(npc)
         final()
         Player['hp'] = Player['hp_max']
-        print( f"Nome: {Player['nome']} | Level: {Player['level']} | HP: {Player['hp']} | Exp: {Player['exp']} / {Player['exp_max']}")
+        space()
+        print( f"Nome: {Player['nome']} | Level: {Player['level']} | HP: {Player['hp']} | Damage: {Player['dano']} | Exp: {Player['exp']} / {Player['exp_max']}")
+        space()
         select()
         batalha()
         
     if Player['hp'] < 0:
-        print(f"Você foi derrotado !!!")
-        print("Vamos novamente?")
+        print(f"→ Você foi derrotado !!!")
+        print("→ Vamos novamente?")
         continuar = input("Digite 'S' para continuar ou 'N' para sair: ")
         if continuar.upper() == "S":
             print("Vamos nessa então !!!")
-            time.sleep(3)
+            space()
+            time.sleep(2)
             reset()
         else:
-            print("Saindo do Jogo...")
-            time.sleep(3)
+            print("Saindo do Jogo...")            
+            space()
+            time.sleep(0.3)
+            print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
+            time.sleep(0.3)
+            print("░██████████████░░████░░░░░░░████░░████░░██████████████░░░░")
+            time.sleep(0.3)
+            print("░██░░░░░░░░░░░░░░░░████░░████░░░░░████░░░░░░░████░░░░░░░░░")
+            time.sleep(0.3)
+            print("░██████████████░░░░░░░████░░░░░░░░████░░░░░░░████░░░░░░░░░")
+            time.sleep(0.3)
+            print("░██░░░░░░░░░░░░░░░░████░░████░░░░░████░░░░░░░████░░░░░░░░░")
+            time.sleep(0.3)
+            print("░██████████████░░████░░░░░░░████░░████░░░░░░░████░░░░░░░░░")
+            time.sleep(0.3)
+            print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
+            space()
+            time.sleep(2)
             sys.exit()
 batalha()
 
