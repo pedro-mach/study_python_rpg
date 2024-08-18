@@ -20,6 +20,7 @@ def reset():
 def space():
     print("-" * 40)
     
+print()
 space()
 print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
 time.sleep(0.3)
@@ -127,7 +128,6 @@ print("Selecione um NPC pelo ID para iniciar o combate")
 print("↓↓↓")
 def show_npcs(): # fromatação
     for npc in npc_list:
-        
         print(
             f"ID {npc['Nome']} | Level: {npc['Level']} | HP: {npc['hp']} | Dano-origal: {npc['Dano']} | Dano: {npc['damage']} | Classe: {npc['Class']} | Raridade: {npc['Raridade']} | XP: {npc['exp']}"
         )
@@ -145,11 +145,10 @@ def final():
     if Player['exp'] >= Player['exp_max']:
         Player['level'] += 1
         Player['exp'] -= Player['exp_max']
-        Player['exp_max'] = 30 + (Player['level'] * 10)
+        Player['exp_max'] =30 
         Player['hp_max'] += 50
         Player['hp'] = Player['hp_max']
-       
-        print(f"Level Up! Novo Level: {Player['level']}")   
+        print(f"→Level Up! Novo Level: {Player['level']}")   
         
 def batalha():
     npc = select()
@@ -163,6 +162,7 @@ def batalha():
             print(
                 f"Nome: {npc['Nome']} | HP: {npc['hp']} | Damage: {npc['damage']}"
             )
+            time.sleep(0.5)
     space()
     if npc['hp'] < 0:
         Player['exp'] += npc['exp']
@@ -189,19 +189,19 @@ def batalha():
             print("Saindo do Jogo...")            
             space()
             time.sleep(0.3)
-            print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
+            print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
             time.sleep(0.3)
-            print("░██████████████░░████░░░░░░░████░░████░░██████████████░░░░")
+            print("░███████░░██░░░░██░░██░░████████░")
             time.sleep(0.3)
-            print("░██░░░░░░░░░░░░░░░░████░░████░░░░░████░░░░░░░████░░░░░░░░░")
+            print("░█░░░░░░░░░██░░██░░░██░░░░░██░░░░")
             time.sleep(0.3)
-            print("░██████████████░░░░░░░████░░░░░░░░████░░░░░░░████░░░░░░░░░")
+            print("░███████░░░░░██░░░░░██░░░░░██░░░░")
             time.sleep(0.3)
-            print("░██░░░░░░░░░░░░░░░░████░░████░░░░░████░░░░░░░████░░░░░░░░░")
+            print("░█░░░░░░░░░██░░██░░░██░░░░░██░░░░")
             time.sleep(0.3)
-            print("░██████████████░░████░░░░░░░████░░████░░░░░░░████░░░░░░░░░")
+            print("░███████░░██░░░░██░░██░░░░░██░░░░")
             time.sleep(0.3)
-            print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
+            print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
             space()
             time.sleep(2)
             sys.exit()
