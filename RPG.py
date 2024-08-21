@@ -18,8 +18,8 @@ def reset():
     os.execl(python, python, *sys.argv)
 
 def space():
-    print("-" * 40)
-    
+    print("◼" * 100)
+
 print()
 space()
 print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
@@ -48,17 +48,17 @@ npc_list = []
 print("→ Vamos começar criando seu player")
 nome = input("Digite o nome: ") # Solicita o nome
 print("→ Vamos escolher uma classe!!")
-continuar = input("Digite 'TANK' para +10 de Armadura, 'ASSASINO' para +10 de dano ou 'NENHUM' para jogar: ")
+continuar = input("Digite 'TANK' para +10 de Armadura, 'ASSASSINO' para +10 de dano ou 'NENHUM' para jogar: ")
 level = 1
 dano_player = (level + (randint(10, 15)))*2
 hp = 50 *(randint(2, 5)/2)
-if continuar.upper() == "ASSASINO":
+if continuar.upper() == "ASSASSINO":
         dano_player += 10
 Player = {     
     "nome": nome,
     "level": 1,
     "exp": 0,
-    "exp_max": 30,
+    "exp_max": 20,
     "hp": hp,
     "hp_max": hp,
     "dano": dano_player,
@@ -73,12 +73,12 @@ space()
     
 
 def create_npc():
-    level = randint(1, 30) # level
+    level = randint(1, 20) # level
     if level <= 10: #raridade
         raridade = "Comum"
-    elif level <= 18:
+    elif level <= 16:
         raridade = "Raro"
-    elif level <= 25:
+    elif level <= 19:
         raridade = "Epico"
     else:
         raridade = "Lendario"
@@ -101,7 +101,7 @@ def create_npc():
         dano = 0
   # Contador para nomear os NPCs automaticamente.
     
-    exp = (dano_original - level)*2
+    exp = (dano_original)*2
     if exp <=0:
         exp = 0
     
@@ -143,10 +143,14 @@ def show_npcs(): # fromatação
 def select():
     show_npcs()
     npc = int(input("Escolha um NPC: "))
-    if  npc >= 0 and  npc:
+    if  0 <= npc <= 5:
                 return npc_list[npc - 1]
     else:
         print("Escolha um NPC válido!")
+        space()
+        select()
+        
+    
                 
 def final():
     if Player['exp'] >= Player['exp_max']:
@@ -179,7 +183,8 @@ def batalha():
         space()
         print( f"Nome: {Player['nome']} | Level: {Player['level']} | HP: {Player['hp']} | Damage: {Player['dano']} | Exp: {Player['exp']} / {Player['exp_max']}")
         space()
-        select()
+        print("Selecione um NPC pelo ID para iniciar o combate")
+        print("↓↓↓")
         batalha()
         
     if Player['hp'] < 0:
@@ -195,22 +200,26 @@ def batalha():
             print("Saindo do Jogo...")            
             space()
             time.sleep(0.3)
-            print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
+            print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
             time.sleep(0.3)
-            print("░███████░░██░░░░██░░██░░████████░")
+            print("░░█░░░░█▀▀▀▀░█▀▀█░█░░█░█░█▄░░█░█▀▀█░░")
             time.sleep(0.3)
-            print("░██░░░░░░░░██░░██░░░██░░░░░██░░░░")
+            print("░░█░░░░█◼◼◼░░█▄▄█░█░░█░█░█░█░█░█░▄▄░░")
             time.sleep(0.3)
-            print("░███████░░░░░██░░░░░██░░░░░██░░░░")
+            print("░░█▄▄█░█▄▄▄▄░█░░█░▀▄▄▀░█░█░░▀█░█▄▄█░░")
             time.sleep(0.3)
-            print("░██░░░░░░░░██░░██░░░██░░░░░██░░░░")
+            print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
             time.sleep(0.3)
-            print("░███████░░██░░░░██░░██░░░░░██░░░░")
+            print("░█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█░")
             time.sleep(0.3)
-            print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
+            print("░█░██░██░██░██░██░██░██░██░██░██░░░█░")
+            time.sleep(0.3)
+            print("░█░██░██░██░██░██░██░██░██░██░██░░░█░")
+            time.sleep(0.3)
+            print("░█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█░")
+            time.sleep(0.3)
+            print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
             space()
             time.sleep(2)
             sys.exit()
 batalha()
-
-   
