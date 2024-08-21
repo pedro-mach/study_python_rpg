@@ -124,19 +124,26 @@ def rep_npc(n_npcs): # adiciona na lista
         npc = create_npc()
         npc_list.append(npc)
 
+rep_npc(5)
+
 print("Selecione um NPC pelo ID para iniciar o combate")
 print("↓↓↓")
+
 def show_npcs(): # fromatação
     for npc in npc_list:
-        print(
+        if npc['hp'] > 0:
+            print(
             f"ID {npc['Nome']} | Level: {npc['Level']} | HP: {npc['hp']} | Dano-origal: {npc['Dano']} | Dano: {npc['damage']} | Classe: {npc['Class']} | Raridade: {npc['Raridade']} | XP: {npc['exp']}"
-        )
-rep_npc(5)
+            )
+        else:
+            print(
+               f"ID {npc['Nome']} | NPC Morto"
+            )
 
 def select():
     show_npcs()
     npc = int(input("Escolha um NPC: "))
-    if  npc >= 0 and  npc <= len(npc_list):
+    if  npc >= 0 and  npc:
                 return npc_list[npc - 1]
     else:
         print("Escolha um NPC válido!")
@@ -167,7 +174,6 @@ def batalha():
     if npc['hp'] < 0:
         Player['exp'] += npc['exp']
         print(f"→ NPC derrotado || Exp Ganha:{npc['exp']}")
-        npc_list.remove(npc)
         final()
         Player['hp'] = Player['hp_max']
         space()
@@ -193,11 +199,11 @@ def batalha():
             time.sleep(0.3)
             print("░███████░░██░░░░██░░██░░████████░")
             time.sleep(0.3)
-            print("░█░░░░░░░░░██░░██░░░██░░░░░██░░░░")
+            print("░██░░░░░░░░██░░██░░░██░░░░░██░░░░")
             time.sleep(0.3)
             print("░███████░░░░░██░░░░░██░░░░░██░░░░")
             time.sleep(0.3)
-            print("░█░░░░░░░░░██░░██░░░██░░░░░██░░░░")
+            print("░██░░░░░░░░██░░██░░░██░░░░░██░░░░")
             time.sleep(0.3)
             print("░███████░░██░░░░██░░██░░░░░██░░░░")
             time.sleep(0.3)
