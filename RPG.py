@@ -1,13 +1,4 @@
-#npcs_list = [
-#   {"name" : "Monstro-Fraco", "level": 1, "type": "Fire"},
-#   {"name" : "Monstro-Forte", "level": 3,"type": "Water"},
-#   {"name" : "Monstro-Magico", "level": 5,"type": "Ice"},
-#   {"name" : "Monstro-Gigante", "level": 9, "type": "Void"},
-#   {"name" : "Monstro-Dragao", "level": 15, "type": "Darkness"}  # Adicionando novos NPCs
-#]
 
-#for npc in npcs_list:
-#    print(npc["type"])
 from random import randint
 import os
 import sys
