@@ -97,10 +97,16 @@ def create_npc():
     exp = (dano_original)*2
     if exp <=0:
         exp = 0
-    
+    tag = "NPC_"
     nome = len(npc_list) + 1
+    name = tag + str(nome)
     new_npc = { # criação de NPCs e atribuições
-        "Nome": nome,
+        "ID": nome,
+        "Nome": name,
+        "Level": level,
+        "Dano": dano_original,
+        "damage": dano,
+        "Nome": name,
         "Level": level,
         "Dano": dano_original,
         "damage": dano, 
@@ -126,11 +132,11 @@ def show_npcs(): # fromatação
     for npc in npc_list:
         if npc['hp'] > 0:
             print(
-            f"ID {npc['Nome']} | Level: {npc['Level']} | HP: {npc['hp']} | Dano-origal: {npc['Dano']} | Dano: {npc['damage']} | Classe: {npc['Class']} | Raridade: {npc['Raridade']} | XP: {npc['exp']}"
+            f"ID {npc['ID']} | {npc['Nome']} | Level: {npc['Level']} | HP: {npc['hp']} | Dano-origal: {npc['Dano']} | Dano: {npc['damage']} | Classe: {npc['Class']} | Raridade: {npc['Raridade']} | XP: {npc['exp']}"
             )
         else:
             print(
-               f"ID {npc['Nome']} | NPC Morto"
+               f"ID {npc['ID']} | {npc['Nome']} | NPC Morto"
             )
 
 def select():
@@ -158,17 +164,21 @@ def batalha():
     npc = select()
     space()
     while Player['hp'] > 0 and npc['hp'] > 0:
-            Player['hp'] -= npc['damage']
             npc['hp'] -= Player['dano']
-            print(
-                f"Nome: {Player['nome']} | HP: {Player['hp']} | Damage: {Player['dano']}"
-            )
+            Player['hp'] -= npc['damage']
+            if npc['hp'] < 0:
+                npc['hp'] = 0
+            if Player['hp'] < 0:
+                Player['hp'] = 0
             print(
                 f"Nome: {npc['Nome']} | HP: {npc['hp']} | Damage: {npc['damage']}"
             )
+            print(
+                f"Nome: {Player['nome']} | HP: {Player['hp']} | Damage: {Player['dano']}"
+            )
             time.sleep(0.5)
     space()
-    if npc['hp'] < 0:
+    if npc['hp'] <= 0:
         Player['exp'] += npc['exp']
         print(f"→ NPC derrotado || Exp Ganha:{npc['exp']}")
         final()
@@ -180,14 +190,14 @@ def batalha():
         print("↓↓↓")
         batalha()
         
-    if Player['hp'] < 0:
+    if Player['hp'] <= 0:
         print(f"→ Você foi derrotado !!!")
         print("→ Vamos novamente?")
         continuar = input("Digite 'S' para continuar ou 'N' para sair: ")
         if continuar.upper() == "S":
             print("Vamos nessa então !!!")
             space()
-            time.sleep(2)
+            time.sleep(1)
             reset()
         else:
             print("Saindo do Jogo...")            
