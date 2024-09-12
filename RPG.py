@@ -125,6 +125,10 @@ def rep_npc(n_npcs): # adiciona na lista
 
 rep_npc(5)
 
+def cond_vitoria():
+     todos_mortos = all(npc['Nome'] == 'NPC MORTO' for npc in npc_list)
+     return todos_mortos
+
 print("Selecione um NPC pelo ID para iniciar o combate")
 print("↓↓↓")
 
@@ -135,8 +139,9 @@ def show_npcs(): # fromatação
             f"ID {npc['ID']} | {npc['Nome']} | Level: {npc['Level']} | HP: {npc['hp']} | Dano-origal: {npc['Dano']} | Dano: {npc['damage']} | Classe: {npc['Class']} | Raridade: {npc['Raridade']} | XP: {npc['exp']}"
             )
         else:
+            npc['Nome'] = "NPC Morto"
             print(
-               f"ID {npc['ID']} | {npc['Nome']} | NPC Morto"
+               f"{npc['Nome']}"
             )
 
 def select():
@@ -188,6 +193,10 @@ def batalha():
         space()
         print("Selecione um NPC pelo ID para iniciar o combate")
         print("↓↓↓")
+        if cond_vitoria():
+            print("Você venceu!")
+        else:
+            print("Ainda há inimigos vivos.")
         batalha()
         
     if Player['hp'] <= 0:
@@ -225,4 +234,9 @@ def batalha():
             space()
             time.sleep(2)
             sys.exit()
+            
+def fim():
+     todos_mortos = all(npc['Nome'] == 'NPC MORTO' for npc in npc_list)
+     return todos_mortos
+        
 batalha()
