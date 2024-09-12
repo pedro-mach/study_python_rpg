@@ -43,8 +43,10 @@ continuar = input("Digite 'TANK' para +10 de Armadura, 'ASSASSINO' para +10 de d
 level = 1
 dano_player = (level + (randint(10, 15)))*2
 hp = 50 *(randint(2, 5)/2)
+if continuar.upper() == "TANK":
+    hp = hp + 50
 if continuar.upper() == "ASSASSINO":
-        dano_player += 10
+    dano_player += 10
 Player = {     
     "nome": nome,
     "level": 1,
@@ -102,7 +104,7 @@ def create_npc():
         "Level": level,
         "Dano": dano_original,
         "damage": dano, 
-        "hp": 50 *(level/2), # var de hp - mudar
+        "hp": 40 *(level/2), # var de hp - mudar
         "exp": exp,
         "Raridade": raridade,
         "Class": Classe
